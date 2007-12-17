@@ -36,7 +36,7 @@ cd cairo-dock
 %{__aclocal}
 %{__automake}
 %configure
-%{__make}
+%{__make} -j1
 cd ..
 
 cd plug-ins
@@ -59,7 +59,7 @@ for dir in clock file-manager rhythmbox dustbin file-manager-gnome rendering; do
 	fi
 	%{__automake}
 	PACKAGE_LIBS="$PACKAGE_LIBS `pkg-config --libs $PACKAGES`" PACKAGE_CFLAGS="$PACKAGE_CFLAGS `pkg-config --cflags $PACKAGES` " %configure
-	%{__make} pkgdatadir=/usr/share/cairo-dock/plug-in/$dir
+	%{__make} -j1 pkgdatadir=/usr/share/cairo-dock/plug-in/$dir
 	cd ..
 done
 cd ..
