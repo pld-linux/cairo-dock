@@ -82,7 +82,8 @@ for dir in clock file-manager rhythmbox dustbin file-manager-gnome rendering; do
 	%{__automake}
 	PACKAGE_LIBS="$PACKAGE_LIBS `pkg-config --libs $PACKAGES`" \
 	PACKAGE_CFLAGS="$PACKAGE_CFLAGS `pkg-config --cflags $PACKAGES` " \
-	%configure
+	%configure \
+		--disable-static
 	%{__make} -j1 \
 		pkgdatadir=/usr/share/cairo-dock/plug-in/$dir
 	cd ..
