@@ -47,6 +47,7 @@ Pliki nagłówkowe do tworzenia wtyczek cairo-docka.
 %build
 cd opt/cairo-dock
 DOCKDIR=$(pwd)
+cd cairo-dock
 %{__autoconf}
 %{__aclocal}
 %{__automake}
@@ -85,12 +86,12 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} -C opt/cairo-dock install \
+%{__make} -C opt/cairo-dock/cairo-dock install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 # To fix: logout
 for dir in clock file-manager rhythmbox dustbin file-manager-gnome rendering; do
-	%{__make} -C opt/plug-ins/$dir install \
+	%{__make} -C opt/cairo-dock/plug-ins/$dir install \
 		DESTDIR=$RPM_BUILD_ROOT \
 		pkgdatadir=/usr/share/cairo-dock/plug-in/$dir
 done
