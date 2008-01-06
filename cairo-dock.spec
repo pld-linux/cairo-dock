@@ -8,10 +8,11 @@ Group:		Applications
 Source0:	http://download.berlios.de/cairo-dock/%{name}-sources-20071214.tar.bz2
 # Source0-md5:	5c826e7bb4ac15dc398e59d7f698d1e3
 URL:		http://developer.berlios.de/projects/cairo-dock/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	cairo-devel
 BuildRequires:	dbus-glib
+BuildRequires:	glitz-devel
 BuildRequires:	gnome-vfs2-devel >= 2.0
 BuildRequires:	gtk+2-devel >= 1:2.0
 BuildRequires:	libgnomeui-devel >= 2.0
@@ -33,7 +34,11 @@ opcji.
 Summary:	Header files for cairo-dock plugins development
 Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia wtyczek cairo-docka
 Group:		Development/Libraries
-# probably doesn't require base
+Requires:	cairo-devel
+Requires:	glitz-devel
+Requires:	gtk+2-devel >= 1:2.0
+Requires:	librsvg-devel >= 2.0
+# doesn't require base
 
 %description devel
 Header files for cairo-dock plugins development.
