@@ -1,0 +1,11 @@
+--- data/cairo-dock.desktop~	2009-09-27 18:09:09.000000000 +0200
++++ data/cairo-dock.desktop	2011-01-11 14:07:19.465553693 +0100
+@@ -2,7 +2,7 @@
+ Encoding=UTF-8
+ Type=Application
+ Exec=cairo-dock -o
+-Icon=cairo-dock.svg
++Icon=cairo-dock
+ #DocPath=
+ Terminal=false
+ 
