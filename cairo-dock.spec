@@ -8,6 +8,7 @@ Group:		Applications
 Source0:	http://download.berlios.de/cairo-dock/%{name}-%{version}.tar.bz2
 # Source0-md5:	242b1d4cc6cf9743771ca1752ad342c7
 URL:		http://developer.berlios.de/projects/cairo-dock/
+Patch0:		%{name}-desktop.patch
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	cairo-devel
@@ -21,6 +22,7 @@ BuildRequires:	libgnomeui-devel >= 2.0
 BuildRequires:	librsvg-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	svg2png
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -50,9 +52,9 @@ Pliki nagłówkowe do tworzenia wtyczek cairo-docka.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
-#DOCKDIR=$(pwd)
 %{__libtoolize}
 %{__autoconf}
 %{__aclocal}
@@ -66,6 +68,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+svg2png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.svg $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
@@ -100,6 +104,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/gauges/Turbo-night-fuel/theme.xml
 %dir %{_datadir}/%{name}/themes
 %{_datadir}/%{name}/themes
+%{_desktopdir}/%{name}.desktop
+%{_pixmapsdir}/%{name}.png
 
 %files devel
 %defattr(644,root,root,755)
