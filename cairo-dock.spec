@@ -12,13 +12,13 @@ Patch0:		%{name}-desktop.patch
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	cairo-devel
+BuildRequires:	dbus-devel
 BuildRequires:	dbus-glib
-BuildRequires:	glitz-devel
-BuildRequires:	gnome-vfs2-devel >= 2.0
+BuildRequires:	dbus-glib-devel
+BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 1:2.0
 BuildRequires:	gtkglext-devel >= 1.2.0
 BuildRequires:	intltool
-BuildRequires:	libgnomeui-devel >= 2.0
 BuildRequires:	librsvg-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
