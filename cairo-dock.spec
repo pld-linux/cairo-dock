@@ -15,7 +15,7 @@ BuildRequires:	cairo-devel
 BuildRequires:	dbus-devel
 BuildRequires:	dbus-glib
 BuildRequires:	dbus-glib-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gtk+2-devel >= 1:2.0
 BuildRequires:	gtkglext-devel >= 1.2.0
 BuildRequires:	intltool
