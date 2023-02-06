@@ -1,0 +1,11 @@
+--- cairo-dock-core-2.2.0-4/src/gldit/cairo-dock-log.c.orig	2010-10-02 01:26:58.000000000 +0200
++++ cairo-dock-core-2.2.0-4/src/gldit/cairo-dock-log.c	2023-02-06 21:24:04.665841132 +0100
+@@ -75,7 +75,7 @@ void cd_log_location(const GLogLevelFlag
+ 
+   if (loglevel > s_gLogLevel)
+     return;
+-  g_print(_cd_log_level_to_string(loglevel));
++  g_print("%s", _cd_log_level_to_string(loglevel));
+   g_print("\033[0;37m(%s:%s:%d) \033[%cm \n  ", file, func, line, s_iLogColor);
+   va_start(args, format);
+   g_logv(G_LOG_DOMAIN, loglevel, format, args);

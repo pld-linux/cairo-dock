@@ -1,11 +1,22 @@
---- data/cairo-dock.desktop~	2009-09-27 18:09:09.000000000 +0200
-+++ data/cairo-dock.desktop	2011-01-11 14:07:19.465553693 +0100
-@@ -2,7 +2,7 @@
+--- cairo-dock-core-2.2.0-4/data/cairo-dock.desktop.orig	2023-02-06 21:19:30.557326105 +0100
++++ cairo-dock-core-2.2.0-4/data/cairo-dock.desktop	2023-02-06 21:20:11.763769537 +0100
+@@ -3,7 +3,7 @@
  Encoding=UTF-8
  Type=Application
  Exec=cairo-dock -o
 -Icon=cairo-dock.svg
 +Icon=cairo-dock
- #DocPath=
  Terminal=false
  
+ Comment=Cairo-Dock with OpenGL (hardware acceleration)
+--- cairo-dock-core-2.2.0-4/data/cairo-dock-cairo.desktop.orig	2010-10-02 01:26:58.000000000 +0200
++++ cairo-dock-core-2.2.0-4/data/cairo-dock-cairo.desktop	2023-02-06 21:41:59.493351625 +0100
+@@ -3,7 +3,7 @@
+ Encoding=UTF-8
+ Type=Application
+ Exec=cairo-dock -c
+-Icon=cairo-dock.svg
++Icon=cairo-dock
+ Terminal=false
+ 
+ Comment=A light and eye-candy dock and desklets for your desktop.

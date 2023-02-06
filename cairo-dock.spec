@@ -1,28 +1,33 @@
 Summary:	MacOS-like Dock for GNOME
 Summary(pl.UTF-8):	Dok w stylu MacOS dla GNOME
 Name:		cairo-dock
-Version:	2.1.0
-Release:	2
+Version:	2.2.0.4
+Release:	1
 License:	GPL v3+
 Group:		Applications
-Source0:	http://download.berlios.de/cairo-dock/%{name}-%{version}.tar.bz2
-# Source0-md5:	242b1d4cc6cf9743771ca1752ad342c7
-URL:		http://developer.berlios.de/projects/cairo-dock/
+#Source0Download: https://github.com/Cairo-Dock/cairo-dock-core/releases
+Source0:	https://github.com/Cairo-Dock/cairo-dock-core/archive/2.2.0-4/cairo-dock-core-2.2.0-4.tar.gz
+# Source0-md5:	dac87d416f5721af45c56abbac464fa4
 Patch0:		%{name}-desktop.patch
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake
+Patch1:		%{name}-format.patch
+URL:		http://glx-dock.org/
 BuildRequires:	cairo-devel
+BuildRequires:	cmake >= 2.6
 BuildRequires:	dbus-devel
 BuildRequires:	dbus-glib
 BuildRequires:	dbus-glib-devel
 BuildRequires:	gettext-tools
+BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gtk+2-devel >= 1:2.0
 BuildRequires:	gtkglext-devel >= 1.2.0
-BuildRequires:	intltool
 BuildRequires:	librsvg-devel >= 2.0
-BuildRequires:	libtool
+BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	pkgconfig
-BuildRequires:	svg2png
+BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	xorg-lib-libXcomposite-devel
+BuildRequires:	xorg-lib-libXinerama-devel
+BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	xorg-lib-libXtst-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -39,10 +44,17 @@ Summary:	Header files for cairo-dock plugins development
 Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia wtyczek cairo-docka
 Group:		Development/Libraries
 Requires:	cairo-devel
-Requires:	glitz-devel
+Requires:	dbus-devel
+Requires:	dbus-glib-devel
+Requires:	glib2-devel >= 2.0
 Requires:	gtk+2-devel >= 1:2.0
+Requires:	gtkglext-devel >= 1.0
 Requires:	librsvg-devel >= 2.0
-# doesn't require base
+Requires:	libxml2-devel >= 2.0
+Requires:	xorg-lib-libXcomposite-devel
+Requires:	xorg-lib-libXinerama-devel
+Requires:	xorg-lib-libXrender-devel
+Requires:	xorg-lib-libXtst-devel
 
 %description devel
 Header files for cairo-dock plugins development.
@@ -51,29 +63,27 @@ Header files for cairo-dock plugins development.
 Pliki nagłówkowe do tworzenia wtyczek cairo-docka.
 
 %prep
-%setup -q
-%patch0 -p0
+%setup -q -n cairo-dock-core-2.2.0-4
+%patch0 -p1
+%patch1 -p1
 
 %build
-%{__libtoolize}
-%{__autoconf}
-%{__aclocal}
-%{__automake}
-%configure \
-	--disable-static
-%{__make} -j1
+install -d build
+cd build
+%cmake ..
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-svg2png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.svg $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
+# for plugins (see cairo-dock.pc)
+install -d $RPM_BUILD_ROOT{%{_libdir}/cairo-dock,%{_datadir}/%{name}/plug-ins}
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
-
-%find_lang %{name} --all-name
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -85,30 +95,34 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/cairo-dock
 %attr(755,root,root) %{_bindir}/cairo-dock-package-theme
-%attr(755,root,root) %{_bindir}/launch-cairo-dock-after-compiz
+%attr(755,root,root) %{_bindir}/launch-cairo-dock-with-delay
+%attr(755,root,root) %{_libdir}/libgldi.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgldi.so.2
+%dir %{_libdir}/cairo-dock
 %dir %{_datadir}/%{name}
+%{_datadir}/%{name}/ChangeLog.txt
+%attr(755,root,root) %{_datadir}/%{name}/help_scripts.sh
 %{_datadir}/%{name}/*.conf
+%{_datadir}/%{name}/*.desktop
 %{_datadir}/%{name}/*.png
 %{_datadir}/%{name}/*.svg
 %{_datadir}/%{name}/*.xpm
-%dir %{_datadir}/%{name}/emblems
-%{_datadir}/%{name}/emblems/*.svg
 %dir %{_datadir}/%{name}/explosion
 %{_datadir}/%{name}/explosion/*.png
 %dir %{_datadir}/%{name}/gauges
-%dir %{_datadir}/%{name}/gauges/Battery
-%{_datadir}/%{name}/gauges/Battery/*.svg
-%{_datadir}/%{name}/gauges/Battery/theme.xml
-%dir %{_datadir}/%{name}/gauges/Turbo-night-fuel
-%{_datadir}/%{name}/gauges/Turbo-night-fuel/*.svg
-%{_datadir}/%{name}/gauges/Turbo-night-fuel/theme.xml
+%{_datadir}/%{name}/gauges/Battery
+%{_datadir}/%{name}/gauges/Turbo-night-fuel
+%dir %{_datadir}/%{name}/plug-ins
 %dir %{_datadir}/%{name}/themes
-%{_datadir}/%{name}/themes
-%{_desktopdir}/%{name}.desktop
-%{_pixmapsdir}/%{name}.png
+%{_datadir}/%{name}/themes/_default_
+%{_desktopdir}/cairo-dock.desktop
+%{_desktopdir}/cairo-dock-cairo.desktop
+%{_pixmapsdir}/cairo-dock.svg
+%{_mandir}/man1/cairo-dock.1*
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/%{name}
-%{_pkgconfigdir}/%{name}.pc
-%attr(755,root,root) %{_libdir}/libcairo-dock.so
+%attr(755,root,root) %{_libdir}/libgldi.so
+%{_includedir}/cairo-dock
+%{_pkgconfigdir}/cairo-dock.pc
+%{_pkgconfigdir}/gldi.pc
