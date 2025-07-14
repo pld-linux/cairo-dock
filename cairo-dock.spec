@@ -64,8 +64,8 @@ Pliki nagłówkowe do tworzenia wtyczek cairo-docka.
 
 %prep
 %setup -q -n cairo-dock-core-2.2.0-4
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %build
 install -d build
