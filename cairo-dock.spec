@@ -1,24 +1,26 @@
 Summary:	MacOS-like Dock for GNOME
 Summary(pl.UTF-8):	Dok w stylu MacOS dla GNOME
 Name:		cairo-dock
-Version:	2.2.0.4
-Release:	2
+Version:	3.5.2
+Release:	0.1
 License:	GPL v3+
 Group:		Applications
 #Source0Download: https://github.com/Cairo-Dock/cairo-dock-core/releases
-Source0:	https://github.com/Cairo-Dock/cairo-dock-core/archive/2.2.0-4/cairo-dock-core-2.2.0-4.tar.gz
-# Source0-md5:	dac87d416f5721af45c56abbac464fa4
-Patch0:		%{name}-desktop.patch
+#Source0:	https://github.com/Cairo-Dock/cairo-dock-core/archive/2.2.0-4/cairo-dock-core-2.2.0-4.tar.gz
+Source0:	https://github.com/Cairo-Dock/cairo-dock-core/archive/refs/tags/%{version}.tar.gz
+# Source0-md5:	1d3f517e38cf565afd45c496e2ebd808
+Patch0:		install_dirs.patch
 Patch1:		%{name}-format.patch
 URL:		http://glx-dock.org/
 BuildRequires:	cairo-devel
 BuildRequires:	cmake >= 2.6
+BuildRequires:	curl-devel
 BuildRequires:	dbus-devel
 BuildRequires:	dbus-glib
 BuildRequires:	dbus-glib-devel
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
-BuildRequires:	gtk+2-devel >= 1:2.0
+BuildRequires:	gtk+3-devel >= 3.4.0
 BuildRequires:	gtkglext-devel >= 1.2.0
 BuildRequires:	librsvg-devel >= 2.0
 BuildRequires:	libxml2-devel >= 2.0
@@ -47,7 +49,7 @@ Requires:	cairo-devel
 Requires:	dbus-devel
 Requires:	dbus-glib-devel
 Requires:	glib2-devel >= 2.0
-Requires:	gtk+2-devel >= 1:2.0
+Requires:	gtk+3-devel >= 3.4.0
 Requires:	gtkglext-devel >= 1.0
 Requires:	librsvg-devel >= 2.0
 Requires:	libxml2-devel >= 2.0
@@ -63,9 +65,8 @@ Header files for cairo-dock plugins development.
 Pliki nagłówkowe do tworzenia wtyczek cairo-docka.
 
 %prep
-%setup -q -n cairo-dock-core-2.2.0-4
+%setup -q -n cairo-dock-core-%{version}
 %patch -P0 -p1
-%patch -P1 -p1
 
 %build
 install -d build
@@ -94,27 +95,36 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/cairo-dock
-%attr(755,root,root) %{_bindir}/cairo-dock-package-theme
-%attr(755,root,root) %{_bindir}/launch-cairo-dock-with-delay
 %attr(755,root,root) %{_libdir}/libgldi.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgldi.so.2
 %dir %{_libdir}/cairo-dock
+%attr(755,root,root) %{_libdir}/cairo-dock/libcd-Help.so
+%attr(755,root,root) %ghost %{_libdir}/libgldi.so.3
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/ChangeLog.txt
-%attr(755,root,root) %{_datadir}/%{name}/help_scripts.sh
+%dir %{_datadir}/%{name}/scripts
+%attr(755,root,root) %{_datadir}/%{name}/scripts/cairo-dock-package-theme.sh
+%attr(755,root,root) %{_datadir}/%{name}/scripts/help_scripts.sh
+%attr(755,root,root) %{_datadir}/%{name}/scripts/initial-setup.sh
 %{_datadir}/%{name}/*.conf
 %{_datadir}/%{name}/*.desktop
-%{_datadir}/%{name}/*.png
 %{_datadir}/%{name}/*.svg
-%{_datadir}/%{name}/*.xpm
+%{_datadir}/%{name}/readme-default-view
 %dir %{_datadir}/%{name}/explosion
 %{_datadir}/%{name}/explosion/*.png
 %dir %{_datadir}/%{name}/gauges
-%{_datadir}/%{name}/gauges/Battery
 %{_datadir}/%{name}/gauges/Turbo-night-fuel
+%dir %{_datadir}/%{name}/icons
+%{_datadir}/%{name}/icons/*.png
+%{_datadir}/%{name}/icons/*.svg
+%{_datadir}/%{name}/icons/*.xpm
+%dir %{_datadir}/%{name}/images
+%{_datadir}/%{name}/images/*.jpg
+%{_datadir}/%{name}/images/*.png
 %dir %{_datadir}/%{name}/plug-ins
+%{_datadir}/%{name}/plug-ins/Help
 %dir %{_datadir}/%{name}/themes
-%{_datadir}/%{name}/themes/_default_
+%{_datadir}/%{name}/themes/Default-Panel
+%{_datadir}/%{name}/themes/Default-Single
 %{_desktopdir}/cairo-dock.desktop
 %{_desktopdir}/cairo-dock-cairo.desktop
 %{_pixmapsdir}/cairo-dock.svg
@@ -124,5 +134,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgldi.so
 %{_includedir}/cairo-dock
-%{_pkgconfigdir}/cairo-dock.pc
+#%{_pkgconfigdir}/cairo-dock.pc
 %{_pkgconfigdir}/gldi.pc
