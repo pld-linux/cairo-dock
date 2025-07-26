@@ -9,9 +9,8 @@ Group:		Applications
 #Source0:	https://github.com/Cairo-Dock/cairo-dock-core/archive/2.2.0-4/cairo-dock-core-2.2.0-4.tar.gz
 Source0:	https://github.com/Cairo-Dock/cairo-dock-core/archive/refs/tags/%{version}.tar.gz
 # Source0-md5:	1d3f517e38cf565afd45c496e2ebd808
-Patch0:		install_dirs.patch
-Patch1:		%{name}-format.patch
-URL:		http://glx-dock.org/
+Patch0:		%{name}-install-dirs.patch
+URL:		https://glx-dock.org/
 BuildRequires:	cairo-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	curl-devel
@@ -26,8 +25,10 @@ BuildRequires:	librsvg-devel >= 2.0
 BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	wayland-devel >= 1.0.0
 BuildRequires:	xorg-lib-libXcomposite-devel
 BuildRequires:	xorg-lib-libXinerama-devel
+BuildRequires:	xorg-lib-libXrandr-devel >= 1.3
 BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -65,7 +66,7 @@ Header files for cairo-dock plugins development.
 Pliki nagłówkowe do tworzenia wtyczek cairo-docka.
 
 %prep
-%setup -q -n cairo-dock-core-%{version}
+%setup -q -n %{name}-core-%{version}
 %patch -P0 -p1
 
 %build
