@@ -2,7 +2,7 @@ Summary:	MacOS-like Dock for GNOME
 Summary(pl.UTF-8):	Dok w stylu MacOS dla GNOME
 Name:		cairo-dock
 Version:	3.5.2
-Release:	0.1
+Release:	1
 License:	GPL v3+
 Group:		Applications
 #Source0Download: https://github.com/Cairo-Dock/cairo-dock-core/releases

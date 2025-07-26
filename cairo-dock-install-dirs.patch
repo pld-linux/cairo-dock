@@ -1,5 +1,5 @@
---- cairo-dock-core-3.5.2/CMakeLists.txt~	2025-03-08 14:02:51.000000000 +0000
-+++ cairo-dock-core-3.5.2/CMakeLists.txt	2025-07-24 21:05:48.020979229 +0000
+--- cairo-dock-core-3.5.2/CMakeLists.txt-	2025-07-26 12:34:31.820249272 +0000
++++ cairo-dock-core-3.5.2/CMakeLists.txt	2025-07-26 12:35:37.372408183 +0000
 @@ -67,19 +67,13 @@
  
  set (prefix ${CMAKE_INSTALL_PREFIX})  # /usr/local
@@ -24,3 +24,12 @@
  set (bindir "${prefix}/${CMAKE_INSTALL_BINDIR}")  # (...)/bin
  
  set (pluginsdir "${libdir}/cairo-dock")
+@@ -201,7 +195,7 @@
+ set (CAIRO_DOCK_SHARE_DATA_DIR ${pkgdatadir})
+ set (CAIRO_DOCK_SHARE_THEMES_DIR ${pkgdatadir}/themes)
+ #set (CAIRO_DOCK_MODULES_DIR ${libdir}/cairo-dock)
+-set (CAIRO_DOCK_LOCALE_DIR "${prefix}/${CMAKE_INSTALL_LOCALEDIR}")
++set (CAIRO_DOCK_LOCALE_DIR "${CMAKE_INSTALL_LOCALEDIR}")
+ set (CAIRO_DOCK_THEMES_DIR "themes")  # folder name where themes are saved locally, relatively to the root folder of Cairo-Dock.
+ set (CAIRO_DOCK_DISTANT_THEMES_DIR "themes3.4")  # folder name where themes are on the server, relatively to the root folder of the server files.
+ set (CAIRO_DOCK_GETTEXT_PACKAGE ${GETTEXT_PACKAGE})
